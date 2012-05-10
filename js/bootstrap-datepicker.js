@@ -4,6 +4,7 @@
  * =========================================================
  * Copyright 2012 Stefan Petre
  * Improvements by Andrew Rowls
+ * Improvements by Damon Rolfs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -362,28 +363,42 @@
 										this.viewDate = this.moveYear(this.viewDate, dir);
 										break;
 								}
+
+    					  var day = this.viewDate.getDate();
+    					  var month = this.viewDate.getMonth();
+    					  var year = this.viewDate.getFullYear();
+    						this.date = new Date(year, month, day,0,0,0,0);
+    						this.setValue();
+
 								this.fill();
 								break;
 						}
 						break;
 					case 'span':
+  				  var day = this.viewDate.getDate();
+  				  var month = this.viewDate.getMonth();
+  				  var year = this.viewDate.getFullYear();
+				  
 						if (!target.is('.disabled')) {
 							if (target.is('.month')) {
-								var month = target.parent().find('span').index(target);
+								month = target.parent().find('span').index(target);
 								this.viewDate.setMonth(month);
 							} else {
-								var year = parseInt(target.text(), 10)||0;
+								year = parseInt(target.text(), 10)||0;
 								this.viewDate.setFullYear(year);
 							}
+  						this.date = new Date(year, month, day,0,0,0,0);
 							this.showMode(-1);
 							this.fill();
+  						this.setValue();
 						}
 						break;
 					case 'td':
 						if (target.is('.day') && !target.is('.disabled')){
 							var day = parseInt(target.text(), 10)||1;
-							var year = this.viewDate.getFullYear(),
-								month = this.viewDate.getMonth();
+							var month = this.viewDate.getMonth();
+							var year = this.viewDate.getFullYear();
+
 							if (target.is('.old')) {
 								if (month == 0) {
 									month = 11;
